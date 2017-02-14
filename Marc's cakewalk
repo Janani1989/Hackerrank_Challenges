@@ -1,0 +1,39 @@
+/*
+PROBLEM STATEMENT:
+
+Marc loves cupcakes, but he also likes to stay fit. He eats n cupcakes in one sitting, and each cupcake  has a calorie count,c[i]. 
+After eating a cupcake with c calories, he must walk at least 2^j*c[i] (where j is the number cupcakes he has already eaten) miles to maintain his weight.
+Given the individual calorie counts for each of the  cupcakes, 
+find and print a long integer denoting the minimum number of miles Marc must walk to maintain his weight.
+Note that he can eat the cupcakes in any order.
+
+*/
+
+
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int n = in.nextInt();
+        int[] calories = new int[n];
+        for(int calories_i=0; calories_i < n; calories_i++){
+            calories[calories_i] = in.nextInt();
+        }
+        long miles=0;
+        long walk=1;
+        // your code goes here
+        Arrays.sort(calories); // Inorder to process by highest calorie first 
+        for(int i=n-1;i>=0;i--){
+            miles+=calories[i]*(walk);
+        //     System.out.println(calories[i]+", "+walk+", "+miles);
+            walk=walk<<1; // to increase by powers of 22 in every iteration
+        }
+        System.out.println(miles);
+    }
+}
