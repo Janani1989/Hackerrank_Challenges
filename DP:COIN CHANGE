@@ -1,0 +1,46 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+    static long[] memo;
+    public static long makeChange(int[] coins, int money) {
+       //WITH EVERY COIN IN THE BAG OF COINS, FIND THE NUMBER OF WAYS THE SUM/TOTAL MONEY CAN BE OBTAINED 
+       BY STARTING FRM THE MINIMUM POSSIBLE AMOUNT TO THE GIVEN MONEY
+       
+                    for(int j=0;j<coins.length;j++)
+                    for(int i=coins[0];i<=money;i++)
+                    {
+                
+                   if(i-coins[j]>=0)    // THE GIVEN AMOUNT CAN BE FORMED ONLY FROM COINS WHICH HAVE VALUE <= GIVEN MONEY
+                      memo[i]+=memo[i-coins[j]];
+                }
+       
+        
+            
+        return memo[money];
+        
+    }
+    
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int n = in.nextInt();
+        int m = in.nextInt();
+        int coins[] = new int[m];
+        for(int coins_i=0; coins_i < m; coins_i++){
+            coins[coins_i] = in.nextInt();
+        }
+        Arrays.sort(coins);
+        memo=new long[n+coins[0]];
+        memo[0]=1;
+        int i;
+         for( i=1;i<coins[0];i++)
+            memo[i]=0;
+        for( i=coins[0];i<=n;i++)
+            memo[i]=0;
+       
+        System.out.println(makeChange(coins, n));
+    }
+}
