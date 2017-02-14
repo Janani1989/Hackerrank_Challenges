@@ -1,0 +1,70 @@
+/*This Java program implements Queue using two stacks*/
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+    public static class MyQueue<T> {
+        Stack<T> stackNewestOnTop = new Stack<T>();
+        Stack<T> stackOldestOnTop = new Stack<T>();
+        public void enqueue(T value) { // Push onto newest stack
+            stackNewestOnTop.add(value);
+            if(stackOldestOnTop.empty())
+                stackOldestOnTop.add(value);
+            else            
+                stackOldestOnTop.insertElementAt(value,0);
+            
+        }
+
+        public T peek() {
+             if(!stackOldestOnTop.empty())
+                 return stackOldestOnTop.peek();
+            return null;
+        }
+
+        public T dequeue() {
+            
+            if(!stackOldestOnTop.empty()){
+                if(!stackNewestOnTop.empty())
+            stackNewestOnTop.removeElementAt(0);
+              /*  stackNewestOnTop.clear();
+            
+            for(int i=stackOldestOnTop.size()-2;i>=0;i-- ){
+                stackNewestOnTop.push(stackOldestOnTop.elementAt(i));
+            }*/
+            
+            return stackOldestOnTop.pop();
+            }
+            else
+                return null;
+        }
+    }
+
+    
+    public static void main(String[] args) {
+        MyQueue<Integer> queue = new MyQueue<Integer>();
+        
+        Scanner scan = new Scanner(System.in);
+        int n = scan.nextInt();
+        
+        for (int i = 0; i < n; i++) {
+         try{
+            int operation = scan.nextInt();
+            if (operation == 1) { // enqueue
+                queue.enqueue(scan.nextInt());
+            } else if (operation == 2) { // dequeue
+                queue.dequeue();
+            } else if (operation == 3) { // print/peek
+                System.out.println(queue.peek());
+            }
+         }
+            catch(Exception e){
+                System.out.println(e.getStackTrace());
+            }
+        }
+        
+        scan.close();
+    }
+}
