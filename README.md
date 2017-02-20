@@ -13,3 +13,5 @@ Solutions and README file for each of the following problems:
 4.KightL on chessboard (ShortestPath-BFS)
 
 5.Implementation of Queue using stack (DataStructures)
+
+6. Time-effecient circular rotation of array (Algorithms)
