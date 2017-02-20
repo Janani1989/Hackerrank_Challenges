@@ -1,0 +1,52 @@
+/* This program performs circular rotation of array in O(constant) time*/
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int n = in.nextInt(); //number of elements
+        int k = in.nextInt(); //k rotations
+        int q = in.nextInt();  //number of queries or indices to be printed
+        int[] a = new int[n];
+        for(int a_i=0; a_i < n; a_i++){
+            a[a_i] = in.nextInt(); //actual array
+        }
+        
+        /*perform k rotations
+        int rotation=0;
+        while(rotation < k){  //O(nk) time
+            int first=a[n-1]; // save last element to bring it to a[0]
+            for (int i=n-1;i>0;i--)
+                a[i]=a[i-1];
+            a[0]=first;
+       //     for(int i=0;i<n;i++)
+         //       System.out.print(a[i]+" ");
+            rotation++;
+        }*/
+        //Time-effecient solution O(constant) time where constant=q
+        for(int a0 = 0; a0 < q; a0++){
+            int m = in.nextInt();
+            int i; 
+            if(m+n >= k)
+                 i=m+n-k;     // old_index= new_index - 'k' rotations+ arraysize
+            else{
+                k=k%n;      // when rotation > array_size , consider the number of n in k 
+                i=m+n-k;
+            }
+            if(i >= n){       // if the resulting old_index is out of bounds, it has rotated past a[n-1] and is somewhere on or after a[0]
+                i=i-n;
+                System.out.println(a[i]);
+            }
+            else{
+           
+                System.out.println(a[i]);
+            }
+        }
+        
+    }
+}
