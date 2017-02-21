@@ -1,0 +1,40 @@
+/*This java program removes adjacent pair of similar characters from a string resulting in a string of unique adjacent characters or 
+an empty string.
+eg., aaaabccbddd -> aabccbddd->bccbddd->bbddd->ddd->d        
+*/
+
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution. */
+        Scanner scan=new Scanner(System.in);
+        StringBuilder input=new StringBuilder(scan.nextLine());
+        scan.close();
+        char prev;
+        boolean duplicate=false;
+        int i=0;
+        while(i < input.length()-1){
+            
+            if(input.charAt(i)==input.charAt(++i)){ //if adjacent characters are same, delete them
+                input.delete(i-1,i+1);
+                duplicate=true;
+                i--; //reset i
+            }
+            if(i>=input.length()-1){  //when there are no more characters, reset i to 0 if there are still duplicates
+                if(!duplicate)   // if duplicate is not set to true in a run, then that is the required output string
+                    break;
+                i=0;
+                duplicate=false;
+            }
+            
+           // System.out.println(input.toString());
+        }
+        if(input.length()==0)
+            System.out.println("Empty String");
+        else
+            System.out.println(input.toString());
+    }
+}
