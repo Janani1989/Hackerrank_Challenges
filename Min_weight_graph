@@ -1,0 +1,117 @@
+
+/* This java program displays the path of a start node of the graph to every other node by calculating min weight 
+to each node*/
+
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+    public static class Node{
+        int data;
+        ArrayList<Node> adjacent;
+        Node(int data){
+            this.data=data;
+            this.adjacent=new ArrayList<Node>();
+        }
+    }
+    public static class Graph {
+        Node[] n;  // each node of the graph
+        int size;  //total number of nodes in the graph
+        int[][] weight;  //edge weight 
+        
+        public Graph(int size) {
+            this.size=size;
+            n=new Node[size];
+            weight=new int[size][size];
+            
+            //create n nodes and set all edge weight to -1. Initially no edge
+            for( int i=0;i<size;i++){
+                n[i]=new Node(i+1); 
+                Arrays.fill(weight[i],-1);
+            }
+            
+        }
+
+        public void addEdge(int first, int second) {
+            
+            n[first].adjacent.add(n[second]);
+            n[second].adjacent.add(n[first]);
+            weight[first][second]=6;    // weight of directly connected nodes are set to 6
+            weight[second][first]=6;
+        }
+        
+        public int[] shortestReach(int startId) { // 0 indexed
+            
+            Queue<Node> q=new LinkedList<Node>(); //To implement BFS
+            HashMap<Node,Node> h=new HashMap<Node,Node>(); // child,parent to keep track of weight calculations
+            int[] path=new int[this.size]; //return int array
+            
+            
+            h.put(n[startId],null); //root has no parent
+            q.add(n[startId]);
+            while(!q.isEmpty()){
+                Node n=q.poll();
+                
+                if(h.get(n)!=null){ // weight calculation part
+                    int parentnode=h.get(n).data-1;
+                    int childnode=n.data-1;
+                    if(parentnode!=startId)
+                    weight[startId][childnode]=weight[startId][parentnode]+weight[parentnode][childnode] ;
+                }
+               
+                for(Node neighbors: n.adjacent){   //level order traversal
+                    if(!h.containsKey(neighbors)){
+                        q.add(neighbors);
+                  //      System.out.println("Adding child: "+(neighbors.data-1)+" and parent: "+(n.data-1));
+                        h.put(neighbors,n);
+                    }
+                }
+                
+            }
+        
+            for(int j=0;j<size;j++){
+                    path[j]=weight[startId][j];  //path array is weight of root node with every other node              
+            }
+            return path;
+        }
+    }
+    
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+      
+        int queries = scanner.nextInt();
+        
+        for (int t = 0; t < queries; t++) {
+            
+            // Create a graph of size n where each edge weight is 6:
+            Graph graph = new Graph(scanner.nextInt());
+            int m = scanner.nextInt();
+            
+            // read and set edges
+            for (int i = 0; i < m; i++) {
+                int u = scanner.nextInt() - 1;
+                int v = scanner.nextInt() - 1;
+                
+                // add each edge to the graph
+                graph.addEdge(u, v);
+            }
+            
+            // Find shortest reach from node s
+            int startId = scanner.nextInt() - 1;
+            int[] distances = graph.shortestReach(startId);
+ 
+            for (int i = 0; i < distances.length; i++) {
+                if (i != startId) {
+                    System.out.print(distances[i]);
+                    System.out.print(" ");
+                }
+            }
+            System.out.println();            
+        }
+        
+        scanner.close();
+    }
+}
