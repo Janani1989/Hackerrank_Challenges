@@ -19,3 +19,5 @@ Solutions and README file for each of the following problems:
 7 Min-weight-graph (using BFS)
 
 8 Super reduced String(Algorithms)
+
+9 CountLuck (Algorithms- Search ad Backtracking)
