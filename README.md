@@ -4,7 +4,7 @@ Medium-Hard Level Hacckerrank Problems and my solutions
 
 Solutions and README file for each of the following problems:
 
-1.DP: Coin Change (Dynamic Programming)
+1. [a relative link](DP: COIN CHANGE) (Dynamic Programming)
 
 2.Time Complexity: Primality (Algorithms)
 
